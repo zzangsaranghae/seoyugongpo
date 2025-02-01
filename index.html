@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인생은 괴담이다..</title>
+
+    <!-- 인라인 스타일 -->
+    <style>
+        @font-face {
+            font-family: 'PeoplefirstILTTF';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/PeoplefirstILTTF.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'ChosunGs';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGs.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* 전체 페이지 스타일 */
+        body {
+            background-color: #111;
+            color: white;
+            font-family: 'PeoplefirstILTTF', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* 메인 헤더 스타일 */
+        .header {
+            background: linear-gradient(to bottom, rgba(255, 0, 0, 0.7), transparent);
+            padding: 50px 20px;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-shadow: 3px 3px 10px rgba(255, 0, 0, 0.8);
+        }
+
+        /* 네비게이션 */
+        .nav {
+            margin-top: 20px;
+        }
+        .nav a {
+            color: yellow;
+            text-decoration: none;
+            font-size: 1.2em;
+            margin: 0 15px;
+            transition: 0.3s;
+        }
+        .nav a:hover {
+            color: red;
+            text-shadow: 2px 2px 5px red;
+        }
+
+        /* 메인 콘텐츠 */
+        .content {
+            padding: 50px 20px;
+            font-size: 1.5em;
+            opacity: 0.9;
+        }
+
+        /* 이미지 스타일 */
+        .content img {
+            width: 80%;
+            max-width: 400px;
+            margin: 20px auto;
+            display: block;
+        }
+
+        /* 타이핑 효과 */
+        .typing {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.8);
+        }
+
+        /* 버튼 스타일 */
+        .music-button {
+            background-color: transparent;
+            color: white;
+            border: none;
+            font-size: 2em;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .music-button:hover {
+            color: red;
+            text-shadow: 2px 2px 5px red;
+        }
+
+        /* 제보 문구 스타일 */
+.report-section {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em;
+    color: red;
+    font-family: 'ChosunGs', sans-serif;
+    text-shadow: 2px 2px 5px rgba(255, 0, 0, 0.8);
+    animation: flicker 2s infinite alternate, glitch 0.1s infinite, moveAround 10s infinite linear;
+}
+
+/* 제보 문구가 화면을 떠돌아다니는 애니메이션 */
+@keyframes moveAround {
+    0% { top: 10%; left: 10%; }
+    25% { top: 10%; left: 80%; }
+    50% { top: 80%; left: 80%; }
+    75% { top: 80%; left: 10%; }
+    100% { top: 10%; left: 10%; }
+}
+
+/* 깜빡이는 효과 */
+@keyframes flicker {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+/* 글리치 효과 */
+@keyframes glitch {
+    0% { transform: skewX(0deg); }
+    20% { transform: skewX(5deg); }
+    40% { transform: skewX(-5deg); }
+    60% { transform: skewX(3deg); }
+    80% { transform: skewX(-3deg); }
+    100% { transform: skewX(0deg); }
+}
+
+
+        /* 방명록 스타일 */
+        .guestbook {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 0, 0, 0.2);
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .guestbook input, .guestbook textarea {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            background: black;
+            color: white;
+            border: 1px solid red;
+        }
+
+        .guestbook button {
+            padding: 10px 20px;
+            background: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* 방명록 메시지 스타일 */
+        .guest-messages {
+            margin-top: 20px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .guest-message {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 1.2em;
+            animation: flicker 2s infinite alternate;
+        }
+
+        .delete-btn {
+            background: darkred;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            float: right;
+        }
+
+        /* 깜빡이는 효과 */
+        @keyframes flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">인생은 괴담이다..</div>
+
+    <div class="nav">
+        <a href="사건파일.html" target="_blank">사건 파일</a>
+    <a href="제보하기.html" target="_blank">제보하기</a>
+    <a href="미해결사건.html" target="_blank">미해결 사건</a>
+</div>
+
+    <div class="content">
+        <!-- 로컬 이미지 -->
+        <img src="ear_story.jpg" alt="귀를 의심하게 되는 이야기">
+
+        <!-- 타이핑 효과 -->
+        <p class="typing" id="typing-text"></p>
+
+        <!-- 배경 음악 -->
+        <audio id="bg-music" autoplay loop>
+            <source src="gongpo_music.mp3" type="audio/mpeg">
+            브라우저가 오디오 태그를 지원하지 않습니다.
+        </audio>
+
+        <!-- 음악 재생 및 정지 버튼 -->
+        <button class="music-button" onclick="toggleMusic()">🔊</button>
+
+        <!-- 방명록 -->
+        <div class="guestbook">
+            <h2>방명록</h2>
+            <input type="text" id="guestName" placeholder="이름을 입력하세요">
+            <textarea id="guestMessage" placeholder="메시지를 남겨주세요"></textarea>
+            <button onclick="addGuestMessage()">제출</button>
+        </div>
+
+        <!-- 방명록 메시지 목록 -->
+        <div class="guest-messages" id="guestMessages"></div>
+    </div>
+
+    <!-- 공포스러운 제보 문구 -->
+    <div class="report-section">
+        ☎️ 제보 부탁드립니다.. : @smarthangukin
+    </div>
+
+    <!-- 인라인 스크립트 -->
+    <script>
+        let isPlaying = false;
+
+        function toggleMusic() {
+            const audio = document.getElementById("bg-music");
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+            } else {
+                audio.play();
+                isPlaying = true;
+            }
+        }
+
+        // 타이핑 효과
+        const text = '"어둠 속에서 들려오는 속삭임..."';
+        let index = 0;
+        function typeEffect() {
+            if (index < text.length) {
+                document.getElementById("typing-text").innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeEffect, 150);
+            }
+        }
+        window.onload = typeEffect;
+
+        // 방명록 기능
+        function addGuestMessage() {
+            let name = document.getElementById("guestName").value || "익명";
+            let message = document.getElementById("guestMessage").value;
+
+            if (!message.trim()) {
+                alert("메시지를 입력해주세요!");
+                return;
+            }
+
+            let guestMessages = JSON.parse(localStorage.getItem("guestMessages")) || [];
+            let newMessage = { name: name, message: message };
+
+            guestMessages.push(newMessage);
+            localStorage.setItem("guestMessages", JSON.stringify(guestMessages));
+
+            document.getElementById("guestName").value = "";
+            document.getElementById("guestMessage").value = "";
+
+            displayGuestMessages();
+        }
+
+        function displayGuestMessages() {
+            let guestMessages = JSON.parse(localStorage.getItem("guestMessages")) || [];
+            document.getElementById("guestMessages").innerHTML = guestMessages
+                .map((msg, index) => `<div class="guest-message"><strong>${msg.name}:</strong> ${msg.message}
+                <button class="delete-btn" onclick="deleteGuestMessage(${index})">삭제</button></div>`).join("");
+        }
+
+        function deleteGuestMessage(index) {
+            let guestMessages = JSON.parse(localStorage.getItem("guestMessages")) || [];
+            guestMessages.splice(index, 1);
+            localStorage.setItem("guestMessages", JSON.stringify(guestMessages));
+            displayGuestMessages();
+        }
+
+        window.onload = function() {
+            typeEffect();
+            displayGuestMessages();
+        };
+    </script>
+
+</body>
+</html>

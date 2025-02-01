@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인생은 괴담이다 - 미해결 사건</title>
+    <style>
+        @font-face {
+            font-family: 'PeoplefirstILTTF';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/PeoplefirstILTTF.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            background-color: #000;
+            color: white;
+            font-family: 'PeoplefirstILTTF', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            background: linear-gradient(to bottom, rgba(255, 0, 0, 0.7), transparent);
+            padding: 60px 20px;
+            font-size: 3em;
+            text-shadow: 4px 4px 12px rgba(255, 0, 0, 0.9);
+        }
+
+        nav a {
+            color: #ff4444;
+            text-decoration: none;
+            font-size: 1.5em;
+            margin: 0 15px;
+        }
+
+        nav a:hover {
+            color: red;
+            text-shadow: 2px 2px 5px red;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        /* 사건 목록 스타일 */
+        .case-list {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            background: rgba(255, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .case-item {
+            cursor: pointer;
+            font-size: 1.8em; /* 목록 글씨 크기 조정 */
+            text-decoration: underline;
+            margin: 15px 0; /* 여백 추가 */
+            transition: color 0.3s;
+        }
+
+        .case-item:hover {
+            color: red;
+            text-shadow: 2px 2px 5px red;
+        }
+
+        /* 사건 상세 정보 스타일 */
+        .case-details {
+            display: none;
+            background: rgba(20, 20, 20, 0.9);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+            width: 90%;
+            max-width: 600px;
+            margin: 30px auto;
+            text-align: left;
+        }
+
+        .case-details h2 {
+            font-size: 2em; /* 제목 글씨 크기 */
+            color: red;
+            text-shadow: 2px 2px 10px black;
+        }
+
+        .case-details img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+        }
+
+        .case-details p {
+            font-size: 1.5em; /* 상세 설명 글씨 크기 조정 */
+            line-height: 1.8; /* 줄 간격 */
+            color: #fff; /* 텍스트 색상 */
+        }
+
+        /* "너 지금 똥 싸고 있지..?" 텍스트 스타일 */
+        .floating-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: red;
+            font-size: 3.5em; /* 글씨 크기 */
+            font-weight: bold;
+            font-family: "Gungsuh", serif; /* 궁서체 적용 */
+            text-shadow: 2px 2px 10px black;
+            animation: moveAround 5s infinite, flicker 2s infinite;
+        }
+
+        /* 텍스트 깜빡임 */
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* 텍스트가 화면을 돌아다니는 애니메이션 */
+        @keyframes moveAround {
+            0% { top: 10%; left: 10%; }
+            25% { top: 10%; left: 80%; }
+            50% { top: 80%; left: 80%; }
+            75% { top: 80%; left: 10%; }
+            100% { top: 10%; left: 10%; }
+        }
+    </style>
+</head>
+<body>
+    <header>인생은 괴담이다 - 미해결 사건</header>
+
+    <nav>
+        <a href="index.html">메인 페이지</a>
+        <a href="사건파일.html">사건 파일</a>
+    </nav>
+
+    <div class="content">
+        <!-- 미해결 사건 리스트 -->
+        <div class="case-list">
+            <h2>미해결 사건 목록</h2>
+            <div class="case-item" onclick="showCase(1)">🌶️ 고추먹고 맴맴 사건</div>
+            <div class="case-item" onclick="showCase(2)">🦪 굴먹고 구강과 항문에서 액체가 다 나온..미스터리 사건</div>
+            <div class="case-item" onclick="showCase(3)">🤮 1호선 토 먹은 남자 사건</div>
+        </div>
+
+        <!-- 사건 상세 정보 -->
+        <div class="case-details" id="caseDetails">
+            <h2 id="caseTitle"></h2>
+            <img id="caseImage" src="" alt="사건 이미지">
+            <p id="caseDescription"></p>
+            <button onclick="hideDetails()">닫기</button>
+        </div>
+    </div>
+
+    <!-- "너 지금 똥 싸고 있지..?" -->
+    <div class="floating-text">너 지금 똥 싸고 있지..?</div>
+
+    <script>
+        const cases = [
+            { 
+                title: "고추먹고 맴맴 사건", 
+                description: "고추를 먹은 후 눈이 맴매서 눈을 비비면 눈물이 아닌 고추즙이 나온다는 사건.. 이 글을 퍼트리지 않으면 3일 안에 고추로 변한다는 속설이 있다.. 주의하세요.. 지금부터 카운트.. 똑딱똑딱 시계는 와치..",
+                image: "images/case4.jpg" 
+            },
+            { 
+                title: "굴먹고 구강과 항문에서 액체가 다 나온..미스터리 사건", 
+                description: "1000원 주면 공개... 계좌번호는 110-90..",
+                image: "images/case5.jpg"
+            },
+            { 
+                title: "1호선 토 먹은 남자 사건", 
+                description: "1호선에서 토를 먹은 남자가 발견되었다. 토를 먹은 이유는 아직 밝혀지지 않았다. 사실 주인장은 안다.. 알고싶으면 5000원 내놔.. 안주면 1호선에서 토를 먹는다.. 냠냠",
+                image: "images/case6.jpg"
+            }
+        ];
+
+        function showCase(index) {
+            document.getElementById("caseTitle").innerText = cases[index - 1].title;
+            document.getElementById("caseDescription").innerText = cases[index - 1].description;
+            document.getElementById("caseImage").src = cases[index - 1].image;
+            document.getElementById("caseDetails").style.display = "block";
+        }
+
+        function hideDetails() {
+            document.getElementById("caseDetails").style.display = "none";
+        }
+    </script>
+</body>
+</html>
