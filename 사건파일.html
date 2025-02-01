@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>인생은 괴담이다 - 사건 파일 & 글 작성</title>
+  <style>
+    /* 기본 폰트 및 공통 스타일 */
+    @font-face {
+      font-family: 'PeoplefirstILTTF';
+      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/PeoplefirstILTTF.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+    body {
+      background: radial-gradient(circle at center, #1a1a1a, #000);
+      color: #eee;
+      font-family: 'PeoplefirstILTTF', sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      animation: glitch-bg 5s infinite alternate;
+    }
+    header {
+      background: linear-gradient(to bottom, rgba(255, 0, 0, 0.7), transparent);
+      padding: 60px 20px;
+      font-size: 3em;
+      font-weight: bold;
+      text-shadow: 4px 4px 12px rgba(255, 0, 0, 0.9);
+      margin-bottom: 30px;
+      animation: flicker 2s infinite alternate, glitch 0.2s infinite;
+    }
+    nav {
+      margin: 20px 0;
+    }
+    nav a {
+      color: #ff4444;
+      text-decoration: none;
+      font-size: 1.2em;
+      margin: 0 15px;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #ff0000;
+    }
+    /* 콘텐츠 섹션 공통 스타일 */
+    .content {
+      padding: 20px;
+      opacity: 0.95;
+      animation: fade-in 1s ease-out;
+    }
+    /* 사건 파일 섹션 스타일 */
+    #caseSection {
+      display: block;
+    }
+    .case-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .case {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      margin: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(139, 0, 0, 0.7);
+      width: 90%;
+      max-width: 500px;
+      text-align: left;
+      cursor: pointer;
+      border: 1px solid rgba(139, 0, 0, 0.5);
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .case::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,0,0,0.3), transparent);
+      transform: skewX(-25deg);
+      transition: left 0.5s;
+    }
+    .case:hover::before {
+      left: 100%;
+    }
+    .case:hover {
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
+      transform: scale(1.02);
+      border-color: rgba(255, 0, 0, 0.7);
+    }
+    /* 이미지와 텍스트를 함께 감싸는 영역 */
+    .case-content {
+      overflow: hidden;
+    }
+    /* 이미지 스타일 (게시글 옆에 표시) */
+    .case-img {
+      width: 100px;       /* 원하는 크기로 조정 */
+      height: auto;
+      float: left;
+      margin-right: 15px;
+      border-radius: 5px;
+    }
+    .case h3 {
+      color: #ff4444;
+      font-size: 1.6em;
+      margin: 0 0 10px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+    }
+    .case p {
+      font-size: 1em;
+      color: #ddd;
+      margin: 0;
+    }
+    .case-details {
+      display: none;
+      background: rgba(10, 10, 10, 0.95);
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(139, 0, 0, 0.8);
+      width: 90%;
+      max-width: 600px;
+      margin: 30px auto;
+      text-align: left;
+      position: relative;
+    }
+    .case-details h2 {
+      color: #ff2222;
+      font-size: 2em;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+    }
+    .case-details p {
+      font-size: 1.2em;
+      color: #ccc;
+      line-height: 1.5;
+    }
+    .back-button {
+      background-color: #aa0000;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      cursor: pointer;
+      margin-top: 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      animation: flicker 1s infinite alternate;
+    }
+    .back-button:hover {
+      background-color: #880000;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+    }
+    /* 사건 글 작성 섹션 스타일 */
+    #editorSection {
+      display: none;
+    }
+    .editor-container {
+      width: 90%;
+      max-width: 600px;
+      margin: 20px auto;
+      background: #222;
+      border: 1px solid #444;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      background: #333;
+      color: #eee;
+      border: none;
+      padding: 10px;
+      font-size: 1em;
+      resize: vertical;
+    }
+    .save-button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      background: red;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+    }
+    /* 애니메이션 */
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes flicker {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+    @keyframes glitch-bg {
+      0% { background-color: #1a1a1a; }
+      50% { background-color: #0d0d0d; }
+      100% { background-color: #1a1a1a; }
+    }
+  </style>
+</head>
+<body>
+  <header>인생은 괴담이다</header>
+  <nav>
+    <a href="#" onclick="showSection('caseSection')">사건 파일</a>
+    <a href="#" onclick="showSection('editorSection')">사건 글 작성</a>
+  </nav>
+  <div class="content">
+    <!-- 사건 파일 섹션 -->
+    <section id="caseSection">
+      <div class="case-list" id="caseList"></div>
+      <div class="case-details" id="caseDetails">
+        <h2 id="caseTitle"></h2>
+        <p id="caseDescription"></p>
+        <button class="back-button" onclick="hideDetails()">뒤로 가기</button>
+      </div>
+      <p><a href="index.html">메인 페이지로 돌아가기</a></p>
+    </section>
+    <!-- 사건 글 작성 섹션 -->
+    <section id="editorSection">
+      <h2>사건 글 작성</h2>
+      <div class="editor-container">
+        <textarea id="incidentEditor">이곳에 사건 글을 작성하세요...</textarea>
+      </div>
+      <button class="save-button" onclick="saveIncident()">저장하기</button>
+    </section>
+  </div>
+  <script>
+    // 사건 데이터 (이미지 경로 포함)
+    const cases = [
+      { 
+        title: "지행역 스토리웨이 낙상 사건...", 
+        shortDesc: "그날, 넘어진 것은 누구였을까", 
+        fullDesc: "2024년 12월 05일, 지행역 스토리웨이에서 발생한 낙상 사건. 현장에는 피해자의 흔적이 없었으며, CCTV 영상에는 누군가가 피해자를 밀어내는 장면이 포착되었습니다. 그러나, 그 누군지는 아직까지 밝혀지지 않았습니다.",
+        img: "images/case1.jpg"
+      },
+      { 
+        title: "실습 도중 발생한 이상 현상", 
+        shortDesc: "널스천 그녀는 누구인가...", 
+        fullDesc: "2025년 03월 06일, 의정부 어느 병원에서 발생한 이상 현상. 학생들이 실습 중인 도중 갑자기 사라지거나, 이상한 소리를 들었다고 합니다. 이 사건은 현재까지도 해결되지 않았으며, 관련자들은 미스터리한 일을 목격했다고 주장합니다.",
+        img: "images/case2.jpg"
+      },
+      { 
+        title: "베데스다관에서 일어난 미스터리", 
+        shortDesc: "검은 그림자의 출몰", 
+        fullDesc: "2024년 05월 19일, 베데스다관에서 발생한 미스터리. 건물 내부에서 검은 그림자가 출몰하며, 관계자들은 눈을 의심하고 있습니다. 이 사건은 현재까지도 해결되지 않았으며, 관련자들은 미스터리한 일을 목격했다고 주장합니다.",
+        img: "images/case3.jpg"
+      }
+    ];
+    
+    // 사건 목록 로드 함수 (이미지 포함)
+    function loadCases() {
+      const caseList = document.getElementById("caseList");
+      caseList.innerHTML = "";
+      cases.forEach((c, index) => {
+        const caseDiv = document.createElement("div");
+        caseDiv.classList.add("case");
+        
+        // 이미지 태그 (img 속성이 있을 경우)
+        let imageHTML = "";
+        if (c.img) {
+          imageHTML = `<img src="${c.img}" alt="${c.title} 이미지" class="case-img">`;
+        }
+        
+        // 이미지와 텍스트를 함께 감싸는 영역 생성
+        caseDiv.innerHTML = `
+          ${imageHTML}
+          <div class="case-content">
+            <h3>${c.title}</h3>
+            <p>${c.shortDesc}</p>
+          </div>
+        `;
+        
+        caseDiv.onclick = () => showDetails(index);
+        caseList.appendChild(caseDiv);
+      });
+    }
+    
+    // 사건 상세보기 함수
+    function showDetails(index) {
+      document.getElementById("caseTitle").innerText = cases[index].title;
+      document.getElementById("caseDescription").innerText = cases[index].fullDesc;
+      document.getElementById("caseList").style.display = "none";
+      document.getElementById("caseDetails").style.display = "block";
+    }
+    
+    // 상세보기 종료(목록 복원)
+    function hideDetails() {
+      document.getElementById("caseList").style.display = "flex";
+      document.getElementById("caseDetails").style.display = "none";
+    }
+    
+    // 섹션 전환 함수
+    function showSection(sectionId) {
+      document.getElementById("caseSection").style.display = "none";
+      document.getElementById("editorSection").style.display = "none";
+      document.getElementById(sectionId).style.display = "block";
+      if (sectionId === "caseSection") {
+        loadCases();
+      }
+    }
+    
+    // 사건 글 저장 기능 (로컬 스토리지 예시)
+    function saveIncident() {
+      const content = document.getElementById('incidentEditor').value;
+      localStorage.setItem('incidentText', content);
+      alert('사건 글이 저장되었습니다.');
+    }
+    
+    // 페이지 로드 시 기본 섹션 및 이전 저장글 불러오기
+    window.onload = function() {
+      showSection('caseSection');
+      const saved = localStorage.getItem('incidentText');
+      if (saved) {
+        document.getElementById('incidentEditor').value = saved;
+      }
+    };
+  </script>
+</body>
+</html>
